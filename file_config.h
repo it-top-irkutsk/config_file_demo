@@ -9,12 +9,12 @@ using namespace std;
 using Data = map<string, string>;
 using ItemData = pair<string, string>;
 
-void export_to_file(Data data) {
+void export_to_file(const Data& data) {
     ofstream file;
     file.open("name.dat");
 
     if (file.is_open()) {
-        for (auto item : data) {
+        for (const auto& item : data) {
             file << item.first << "=" << item.second << endl;
         }
     }
@@ -22,7 +22,7 @@ void export_to_file(Data data) {
     file.close();
 }
 
-ItemData parser(string source, string delimiter) {
+ItemData parser(const string& source, const string& delimiter) {
     int pos = source.find(delimiter);
     string key = source.substr(0, pos);
     string value = source.substr(pos + 1);
@@ -40,7 +40,7 @@ Data import_from_file() {
     if (file.is_open()) {
         while (!file.eof()) {
             getline(file, str);
-            if (str == "") continue;
+            if (str.empty()) continue;
 
             names.insert(parser(str, "="));
         }
